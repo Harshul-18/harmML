@@ -139,54 +139,58 @@ def bodyOfPage1():
 
     try:
         if youtubeVideoUrl:
-            video = Video.getInfo(youtubeVideoUrl, mode=ResultMode.json)
-            
-            with st.expander("Prediction"):
-
-                isEdu, isCat, catArr, probArr = predictCategoryFor(url=youtubeVideoUrl)
-                if isEdu == "Educational":
-                    st.markdown(
-                        f"<h5>This video comes under the {isCat} category.</h5>",
-                        unsafe_allow_html=True,
-                    )
-                    plt.figure(facecolor="#ffffff")
-                    fig, x = plt.subplots(facecolor="#ffffff")
-                    p = x.barh([i for i in range(1, len(catArr)+1)], probArr, tick_label=catArr, color="#E11D48")
-                    x.set_facecolor("#ffffff")
-                    x.spines['bottom'].set_color('black')
-                    x.spines['top'].set_color('black') 
-                    x.spines['right'].set_color('black')
-                    x.spines['left'].set_color('black')
-                    x.tick_params(axis='x', colors='black')
-                    x.tick_params(axis='y', colors='black')
-                    x.bar_label(p, label_type="center", color="black")
-                    st.pyplot(fig)
-                else:
-                    st.markdown(
-                        f"<h5>This is not an educational video.</h5>",
-                        unsafe_allow_html=True,
-                    )
-
-
-            with st.expander("View Video"):
-
-                if (youtubeVideoUrl is None or len(youtubeVideoUrl) == 0):
-                    print(colorOf.FAIL + "The url input field is empty, please enter a youtube video url." + colorOf.ENDC)
-                    chime.error()
+            # Check if the URL is valid before proceeding
+            try:
+                video = Video.getInfo(youtubeVideoUrl, mode=ResultMode.json)
                 
-                st_player(youtubeVideoUrl) 
-                
-                try:
-                    st.markdown("**Author of this video:** " + str(video["channel"]["name"]))
-                    st.markdown("**Title of video:** " + str(video["title"]))
-                    st.markdown("**Description of video:** " + str(video["description"]))
-                    chime.success()
-                except Exception as e:
-                    print(colorOf.FAIL + f"Unable to view the video details. {e}" + colorOf.ENDC)
-                    chime.error()
+                with st.expander("Prediction"):
+                    try:
+                        isEdu, isCat, catArr, probArr = predictCategoryFor(url=youtubeVideoUrl)
+                        if isEdu == "Educational":
+                            st.markdown(
+                                f"<h5>This video comes under the {isCat} category.</h5>",
+                                unsafe_allow_html=True,
+                            )
+                            plt.figure(facecolor="#ffffff")
+                            fig, x = plt.subplots(facecolor="#ffffff")
+                            p = x.barh([i for i in range(1, len(catArr)+1)], probArr, tick_label=catArr, color="#E11D48")
+                            x.set_facecolor("#ffffff")
+                            x.spines['bottom'].set_color('black')
+                            x.spines['top'].set_color('black') 
+                            x.spines['right'].set_color('black')
+                            x.spines['left'].set_color('black')
+                            x.tick_params(axis='x', colors='black')
+                            x.tick_params(axis='y', colors='black')
+                            x.bar_label(p, label_type="center", color="black")
+                            st.pyplot(fig)
+                        else:
+                            st.markdown(
+                                f"<h5>This is not an educational video.</h5>",
+                                unsafe_allow_html=True,
+                            )
+                    except Exception as e:
+                        st.error(f"Error in prediction: {str(e)}")
+
+                with st.expander("View Video"):
+                    st_player(youtubeVideoUrl) 
+                    
+                    try:
+                        # Check if video data exists and contains required fields
+                        if video and "channel" in video and "name" in video["channel"] and "title" in video and "description" in video:
+                            st.markdown("**Author of this video:** " + str(video["channel"]["name"]))
+                            st.markdown("**Title of video:** " + str(video["title"]))
+                            st.markdown("**Description of video:** " + str(video["description"]))
+                            chime.success()
+                        else:
+                            st.warning("Some video details are not available")
+                    except Exception as e:
+                        st.error(f"Unable to view the video details: {str(e)}")
+                        chime.error()
+            except Exception as e:
+                st.error(f"Invalid YouTube URL: {str(e)}")
     
     except Exception as e:
-        st.markdown(f"{e}, Please enter the correct video URL")
+        st.error(f"Error: {str(e)}. Please enter a correct YouTube video URL.")
 
 # MARK: Adding body for page 2 containing the fields for channel's statistics
 def bodyOfPage2():
