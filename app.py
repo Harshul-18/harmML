@@ -103,7 +103,7 @@ def add_sidebar_menu():
         # if st.button("Buy us a coffee"):
         #     webbrowser.open_new_tab(path)
 
-        st.markdown("""<a href="https://www.buymeacoffee.com/HARMBOT" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-red.png" alt="Buy Us A Coffee" height="40" width="164" style="border: 1px solid white; border-radius: 16px;"></a>""", unsafe_allow_html=True)
+        st.markdown('''<a href="https://www.buymeacoffee.com/HARMBOT" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-red.png" alt="Buy Us A Coffee" height="40" width="164" style="border: 1px solid white; border-radius: 16px;"></a>''', unsafe_allow_html=True)
     
     page_bg_img = """
     <style>
