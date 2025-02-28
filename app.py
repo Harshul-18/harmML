@@ -22,6 +22,30 @@ import toml
 import webbrowser
 import numpy as np
 import youtube_dl
+import os
+import sys
+
+# Check if model files exist and download them if needed
+def check_models():
+    model_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "models")
+    if not os.path.exists(model_dir):
+        st.warning("Model directory not found. Creating it...")
+        os.makedirs(model_dir, exist_ok=True)
+    
+    # Check for at least one essential model file
+    essential_model = os.path.join(model_dir, "educated_model.pkl")
+    if not os.path.exists(essential_model):
+        st.warning("Model files not found. Please download them using the download_models.py script.")
+        if st.button("Download Models Now"):
+            try:
+                import download_models
+                download_models.main()
+                st.success("Models downloaded successfully! Please refresh the page.")
+            except Exception as e:
+                st.error(f"Error downloading models: {str(e)}")
+                st.info("Please download the models manually and place them in the 'models' directory.")
+        return False
+    return True
 
 st.set_page_config(page_title="HARM Bot", page_icon=Image.open("./assets/harmLogo.ico"))
 # primaryColor = toml.load(".streamlit/config.toml")['theme']['primaryColor']
@@ -120,9 +144,6 @@ def bodyOfPage1():
             with st.expander("Prediction"):
 
                 isEdu, isCat, catArr, probArr = predictCategoryFor(url=youtubeVideoUrl)
-                # print('\n--------------------------------')
-                # print(isEdu, isCat, catArr, probArr)
-                # print('\n--------------------------------')
                 if isEdu == "Educational":
                     st.markdown(
                         f"<h5>This video comes under the {isCat} category.</h5>",
@@ -311,14 +332,21 @@ if __name__ == "__main__":
     hide_streamlit_style()
     add_image(with_path="./assets/harmLogo.gif")
     add_title_text()
-    page_names_to_funcs = {
-        "Category Predictor": bodyOfPage1,
-        "Channel Stats Viewer": bodyOfPage2,
-        "Search Videos": bodyOfPage3,
-        "Playlist Videos Predictor": bodyOfPage4,
-        "Educational Content in a Video": bodyOfPage5,
-    }
-    selected_page = st.sidebar.selectbox("Select the page", page_names_to_funcs.keys())
-    page_names_to_funcs[selected_page]()
-    add_sidebar_menu()
-    add_footer()
+    
+    # Check if models exist before proceeding
+    models_exist = check_models()
+    
+    if models_exist:
+        page_names_to_funcs = {
+            "Category Predictor": bodyOfPage1,
+            "Channel Stats Viewer": bodyOfPage2,
+            "Search Videos": bodyOfPage3,
+            "Playlist Videos Predictor": bodyOfPage4,
+            "Educational Content in a Video": bodyOfPage5,
+        }
+        selected_page = st.sidebar.selectbox("Select the page", page_names_to_funcs.keys())
+        page_names_to_funcs[selected_page]()
+        add_sidebar_menu()
+        add_footer()
+    else:
+        st.info("Please download the model files to use this application.") 
