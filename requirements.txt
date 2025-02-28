@@ -1,0 +1,27 @@
+streamlit==1.31.0
+scikit-learn==1.1.2
+numpy==1.21.3
+pandas==1.5.3
+matplotlib==3.7.2
+pytube==12.1.0
+youtube-search-python==1.6.6
+scrapetube==2.5.1
+stqdm==0.0.5
+youtube-dl==2021.12.17
+streamlit-player==0.1.5
+bokeh==2.4.3
+chime==0.7.0
+Pillow==9.5.0
+nltk==3.7
+requests==2.27.0
+scikit_image==0.19.3
+streamlit_player==0.1.5
+toml==0.10.2
+thinc==8.1.0
+pydantic==1.8.2
+requests-html==0.10.0
+beautifulsoup4==4.9.3
+bs4==0.0.1
+# pandas-profiling==3.6.0
+scipy==1.9.0
+tqdm==4.64.0
