@@ -1,3 +1,5 @@
+setuptools==59.6.0
+altair==4.2.2
 streamlit==1.31.0
 scikit-learn==1.1.2
 numpy==1.21.3
@@ -5,7 +7,7 @@ pandas==1.5.3
 matplotlib==3.7.2
 pytube==12.1.0
 youtube-search-python==1.6.6
-httpx==0.23.0
+httpx==0.23.3
 scrapetube==2.5.1
 stqdm==0.0.5
 youtube-dl==2021.12.17
