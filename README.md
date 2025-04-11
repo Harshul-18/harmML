@@ -88,7 +88,3 @@ Created by HARM, an intern team:
 - Abhijeet Saroha
 - Rishabh Sagar
 - Mayank Arora
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
