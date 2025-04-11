@@ -1,17 +1,8 @@
----
-title: HARM ML Web App
-emoji: 🐠
-colorFrom: blue
-colorTo: yellow
-sdk: streamlit
-sdk_version: 1.10.0
-app_file: app.py
-pinned: false
----
-
-Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
-
 # HARM YouTube API Bot
+
+Checkout YouTube Video for Explanation
+
+[![HARM YouTube API Bot Explanation](https://img.youtube.com/vi/1l_yfh6nHic/0.jpg)](https://www.youtube.com/watch?v=1l_yfh6nHic)
 
 A machine learning application that analyzes YouTube videos to determine if they are educational, categorizes them, and provides statistics.
 
@@ -88,3 +79,7 @@ Created by HARM, an intern team:
 - Abhijeet Saroha
 - Rishabh Sagar
 - Mayank Arora
+
+Checkout HARMML Channel for more Coding Related Content 
+
+[![YouTube Channel](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@harm_/videos)
